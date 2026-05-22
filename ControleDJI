@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador Controle DJI RC 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hotspot {
+      transition: all 0.3s;
+    }
+    .hotspot:hover {
+      transform: scale(1.4);
+      box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white">
+  <div class="max-w-6xl mx-auto p-6">
+    <h1 class="text-4xl font-bold text-center mb-8">🎮 Simulador Controle DJI RC 2</h1>
+    
+    <div class="relative mx-auto" style="max-width: 900px;">
+      <img src="maxresdefault.jpg" class="w-full rounded-2xl shadow-2xl" alt="Controle DJI">
+      
+      <!-- Hotspots -->
+      <div class="hotspot absolute w-12 h-12 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 28%; left: 22%;" data-titulo="Joystick Esquerdo" data-desc="Controla Yaw (rotação) e Throttle (subir/descer)"></div>
+      
+      <div class="hotspot absolute w-12 h-12 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 28%; left: 68%;" data-titulo="Joystick Direito" data-desc="Controla Roll e Pitch"></div>
+      
+      <div class="hotspot absolute w-10 h-10 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 37%;" data-titulo="Botão H (Pause)" data-desc="Pausa o voo e mantém o drone em Hover"></div>
+      
+      <div class="hotspot absolute w-11 h-8 bg-emerald-500/40 rounded border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 48%;" data-titulo="Botão RTH" data-desc="Return to Home - Retorno automático para casa"></div>
+      
+      <div class="hotspot absolute w-10 h-10 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 60%;" data-titulo="Botão Power" data-desc="Liga e desliga o controle"></div>
+    </div>
+
+    <div class="mt-10 bg-zinc-900 rounded-2xl p-8 max-w-2xl mx-auto">
+      <h2 class="text-2xl font-semibold mb-4 text-emerald-400">📋 Detalhes da Função</h2>
+      <div id="info" class="text-zinc-300 text-lg min-h-[100px]">
+        Clique em um dos círculos verdes na imagem
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.hotspot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('info').innerHTML = `
+          <strong class="text-xl">${btn.dataset.titulo}</strong><br><br>
+          ${btn.dataset.desc}
+        `;
+      });
+    });
+  </script>
+</body>
+</html>
