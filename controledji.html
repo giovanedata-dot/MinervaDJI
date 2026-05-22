@@ -12,29 +12,30 @@
     }
     
     .hotspot:hover {
-      transform: scale(1.5);
+      transform: scale(1.4);
       box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.6);
       animation: none;
     }
     
     @keyframes pulse {
-      0% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
-      100% { opacity: 0.7; transform: scale(1); }
+      0% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.6; transform: scale(1); }
     }
     
     .tooltip {
-      position: absolute;
+      position: fixed;
       background: #1f2937;
       color: white;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
       white-space: nowrap;
       pointer-events: none;
-      z-index: 50;
-      transform: translateY(-100%);
-      margin-top: -8px;
+      z-index: 100;
+      border-left: 3px solid #10b981;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     
     .card-flip {
@@ -44,122 +45,123 @@
     .card-flip:hover {
       transform: translateY(-4px);
     }
+    
+    /* Ajuste para garantir que a imagem apareça */
+    .controle-imagem {
+      display: block;
+      width: 100%;
+      border-radius: 1rem;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-zinc-950 to-zinc-900 text-white">
   <div class="max-w-7xl mx-auto p-6">
     <!-- Header com progresso -->
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-        🎮 Simulador DJI RC 2
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+        🎮 Simulador Controle DJI RC 2
       </h1>
-      <div class="flex gap-4">
-        <button id="modoTeste" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 rounded-lg transition">
+      <div class="flex gap-3">
+        <button id="modoTeste" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 rounded-lg transition font-semibold">
           📝 Modo Teste
         </button>
         <button id="resetDicas" class="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg transition">
-          🔄 Reiniciar Dicas
+          🔄 Reiniciar Progresso
         </button>
       </div>
     </div>
     
+    <!-- Container da imagem do controle -->
     <div class="relative mx-auto" style="max-width: 1000px;">
-      <!-- Placeholder enquanto não tem imagem real -->
-      <div class="relative bg-zinc-800 rounded-2xl p-8 min-h-[500px] flex items-center justify-center">
-        <div class="text-center">
-          <svg class="w-32 h-32 mx-auto mb-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-          </svg>
-          <p class="text-zinc-400">⚠️ Adicione uma imagem do controle DJI RC 2</p>
-          <p class="text-sm text-zinc-500 mt-2">Substitua a imagem abaixo ou use uma URL válida</p>
-        </div>
-        
-        <!-- Componentes visuais didáticos -->
-        <div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-          <div class="grid grid-cols-2 gap-32">
-            <div class="text-center">
-              <div class="w-24 h-24 border-4 border-emerald-500 rounded-full mx-auto"></div>
-              <p class="mt-2">Joystick Esquerdo</p>
-            </div>
-            <div class="text-center">
-              <div class="w-24 h-24 border-4 border-emerald-500 rounded-full mx-auto"></div>
-              <p class="mt-2">Joystick Direito</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Hotspots melhorados -->
-        <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold" 
-             style="top: 35%; left: 22%;" 
-             data-titulo="🎮 Joystick Esquerdo"
-             data-desc="<strong>Controles de Movimento:</strong><br>• Yaw (Rotação): Mova para esquerda/direita<br>• Throttle (Altitude): Mova para cima/baixo<br><br>💡 Dica: Controle a altura e direção do drone"
-             data-funcao="yaw_throttle">
-          ⬆️
-        </div>
-        
-        <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold" 
-             style="top: 35%; left: 68%;" 
-             data-titulo="🎮 Joystick Direito"
-             data-desc="<strong>Controles de Navegação:</strong><br>• Roll (Movimento Lateral): Mova esquerda/direita<br>• Pitch (Movimento Frente/Trás): Mova cima/baixo<br><br>💡 Dica: Controla o movimento horizontal do drone"
-             data-funcao="roll_pitch">
-          ➡️
-        </div>
-        
-        <div class="hotspot absolute w-12 h-12 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
-             style="top: 42%; left: 36%;" 
-             data-titulo="⏸️ Botão H (Pause)"
-             data-desc="<strong>Função: Pausa/Hover</strong><br>• Interrompe todos os movimentos<br>• Mantém o drone estável no ar<br>• Útil para emergências<br><br>⚠️ Importante em situações de perda de controle">
-          ⏸️
-        </div>
-        
-        <div class="hotspot absolute w-12 h-10 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
-             style="top: 42%; left: 48%;" 
-             data-titulo="🏠 Botão RTH"
-             data-desc="<strong>Return to Home</strong><br>• Retorno automático ao ponto de partida<br>• Sobe para altitude segura antes de voltar<br>• Usado quando drone está longe<br><br>✅ Altura padrão: 30m">
-          🏠
-        </div>
-        
-        <div class="hotspot absolute w-12 h-12 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
-             style="top: 42%; left: 60%;" 
-             data-titulo="🔘 Botão Power"
-             data-desc="<strong>Liga/Desliga</strong><br>• Pressione 1x para ver a bateria<br>• Pressione + segure para ligar<br>• Sequência: 2 cliques + segurar<br><br>📊 Bateria média: 4 horas de uso">
-          ⚡
-        </div>
+      <img src="maxresdefault.jpg" class="w-full rounded-2xl shadow-2xl border border-zinc-700" alt="Controle DJI RC 2" onerror="this.onerror=null; this.src='https://placehold.co/1000x600/1f2937/10b981?text=DJI+RC+2+Controller'; alert('⚠️ Imagem maxresdefault.jpg não encontrada!\nColoque a imagem na mesma pasta do arquivo HTML.')">
+      
+      <!-- Hotspots (posições ajustadas para uma imagem padrão de controle DJI) -->
+      <!-- Joystick Esquerdo -->
+      <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold text-xl" 
+           style="top: 38%; left: 22%;" 
+           data-titulo="🎮 Joystick Esquerdo"
+           data-desc="<strong>🎮 Joystick Esquerdo - Movimentos Verticais</strong><br><br>📌 <strong class='text-emerald-400'>Funções:</strong><br>• ⬆️ CIMA: Acelera (Throttle) - Sobe<br>• ⬇️ BAIXO: Desacelera - Desce<br>• ⬅️ ESQUERDA: Rotação anti-horária (Yaw)<br>• ➡️ DIREITA: Rotação horária (Yaw)<br><br>💡 <strong class='text-amber-400'>Dica:</strong> Use movimentos suaves para manter estabilidade no voo."
+           data-funcao="yaw_throttle">
+        🕹️
+      </div>
+      
+      <!-- Joystick Direito -->
+      <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold text-xl" 
+           style="top: 38%; left: 68%;" 
+           data-titulo="🎮 Joystick Direito"
+           data-desc="<strong>🎮 Joystick Direito - Movimentos Horizontais</strong><br><br>📌 <strong class='text-emerald-400'>Funções:</strong><br>• ⬆️ CIMA: Pitch para frente<br>• ⬇️ BAIXO: Pitch para trás<br>• ⬅️ ESQUERDA: Roll para esquerda<br>• ➡️ DIREITA: Roll para direita<br><br>💡 <strong class='text-amber-400'>Dica:</strong> Controla o deslocamento lateral e para frente/trás do drone."
+           data-funcao="roll_pitch">
+        🕹️
+      </div>
+      
+      <!-- Botão H (Pause) -->
+      <div class="hotspot absolute w-10 h-10 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center font-bold" 
+           style="top: 44%; left: 37%;" 
+           data-titulo="⏸️ Botão H (Pause)"
+           data-desc="<strong>⏸️ Botão H - Pause/Hover</strong><br><br>📌 <strong class='text-emerald-400'>Função:</strong><br>• Interrompe TODOS os movimentos instantaneamente<br>• Mantém o drone em modo HOVER (estacionário)<br>• Útil em situações de emergência ou perda de orientação<br><br>⚠️ <strong class='text-red-400'>Importante:</strong> Botão de segurança para parada rápida!">
+        H
+      </div>
+      
+      <!-- Botão RTH -->
+      <div class="hotspot absolute w-10 h-8 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-xs font-bold" 
+           style="top: 44%; left: 48%;" 
+           data-titulo="🏠 Botão RTH (Return to Home)"
+           data-desc="<strong>🏠 RTH - Return to Home</strong><br><br>📌 <strong class='text-emerald-400'>Função:</strong><br>• Retorno automático ao ponto de decolagem<br>• Sobe para altitude segura (padrão 30m) antes de voltar<br>• Usado quando drone está longe ou sinal fraco<br><br>✅ <strong class='text-amber-400'>Modos:</strong> Smart RTH | Low Battery RTH | Failsafe RTH">
+        RTH
+      </div>
+      
+      <!-- Botão Power -->
+      <div class="hotspot absolute w-10 h-10 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center font-bold" 
+           style="top: 44%; left: 60%;" 
+           data-titulo="🔘 Botão Power"
+           data-desc="<strong>🔘 Botão Power - Liga/Desliga</strong><br><br>📌 <strong class='text-emerald-400'>Como usar:</strong><br>• 1 pressão rápida: Ver nível da bateria<br>• 1 pressão + segurar (2s): Liga o controle<br>• Mesma sequência: Desliga<br><br>📊 <strong class='text-amber-400'>Bateria:</strong> Até 4 horas de autonomia<br>⚡ Carregamento: USB-C (2h para carga completa)">
+        ⚡
+      </div>
 
-        <div class="hotspot absolute w-10 h-10 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-xs" 
-             style="top: 55%; left: 30%;" 
-             data-titulo="📸 Botão Foto/Video"
-             data-desc="<strong>Captura de Mídia</strong><br>• Meio clique: Foto<br>• Clique total: Inicia/para vídeo<br>• Customizável no app DJI Fly<br><br>🎬 Resolução máxima: 4K 60fps">
-          📷
-        </div>
+      <!-- Botão Foto -->
+      <div class="hotspot absolute w-9 h-9 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-sm" 
+           style="top: 57%; left: 32%;" 
+           data-titulo="📸 Botão Foto/Vídeo"
+           data-desc="<strong>📸 Botão de Captura</strong><br><br>📌 <strong class='text-emerald-400'>Funções:</strong><br>• Meio clique: Foco automático / Foto<br>• Clique total: Inicia/para gravação de vídeo<br>• Customizável no app DJI Fly<br><br>🎬 <strong class='text-amber-400'>Resolução:</strong> Até 4K 60fps | Foto: 20MP">
+        📷
+      </div>
 
-        <div class="hotspot absolute w-12 h-8 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer" 
-             style="top: 62%; left: 47%;" 
-             data-titulo="🔄 Botão C1/C2"
-             data-desc="<strong>Botões Customizáveis</strong><br>• C1: Center camera (padrão)<br>• C2: Grid/Level (padrão)<br>• Podem ser configurados no app<br><br>⚙️ Atalhos para funções frequentes">
-          ⚙️
-        </div>
+      <!-- Botão C1/C2 -->
+      <div class="hotspot absolute w-10 h-6 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer" 
+           style="top: 62%; left: 47%;" 
+           data-titulo="⚙️ Botões C1 e C2"
+           data-desc="<strong>⚙️ Botões Customizáveis C1/C2</strong><br><br>📌 <strong class='text-emerald-400'>Configurações padrão:</strong><br>• <strong>C1:</strong> Centralizar câmera (Center camera)<br>• <strong>C2:</strong> Ativar grade/LED auxiliar<br><br>🔄 <strong class='text-amber-400'>Personalização:</strong> Pode ser alterado no app DJI Fly para funções como:<br>• Grid de enquadramento<br>• LED frontal<br>• Modo esporte rápido">
+        C1/C2
+      </div>
+
+      <!-- Dial de zoom (se houver no controle) -->
+      <div class="hotspot absolute w-6 h-12 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer" 
+           style="top: 52%; left: 19%;" 
+           data-titulo="🔍 Dial de Zoom"
+           data-desc="<strong>🔍 Dial de Zoom</strong><br><br>📌 <strong class='text-emerald-400'>Função:</strong><br>• Gire para esquerda/direita: Zoom da câmera<br>• Zoom óptico (se disponível no drone)<br>• Zoom digital complementar<br><br>🎥 <strong class='text-amber-400'>Zoom máximo:</strong> Depende do drone compatível">
+        🔍
       </div>
     </div>
 
-    <!-- Painel de informações expandido -->
+    <!-- Painel duplo: informações + quiz -->
     <div class="mt-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <!-- Painel de informações -->
       <div class="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl p-6 shadow-xl card-flip">
         <h2 class="text-2xl font-semibold mb-4 text-emerald-400 flex items-center gap-2">
           📋 <span id="infoTitulo">Detalhes da Função</span>
         </h2>
-        <div id="info" class="text-zinc-300 leading-relaxed min-h-[180px]">
-          Clique em qualquer botão verde para aprender sua função
+        <div id="info" class="text-zinc-300 leading-relaxed min-h-[180px] text-lg">
+          ✨ Clique em qualquer botão verde na imagem do controle para aprender sua função
         </div>
       </div>
       
-      <!-- Área de quiz interativo -->
+      <!-- Quiz interativo -->
       <div class="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl p-6 shadow-xl">
         <h2 class="text-2xl font-semibold mb-4 text-amber-400 flex items-center gap-2">
           🧠 <span>Teste Seu Conhecimento</span>
         </h2>
         <div id="quizArea">
-          <p class="text-zinc-400 mb-3" id="pergunta">Clique em "Modo Teste" para começar</p>
+          <p class="text-zinc-400 mb-3" id="pergunta">Clique em "Modo Teste" para começar o desafio!</p>
           <div id="quizOptions" class="space-y-2"></div>
           <div id="quizFeedback" class="mt-3 text-sm"></div>
         </div>
@@ -169,15 +171,18 @@
       </div>
     </div>
     
-    <!-- Barra de progresso de aprendizado -->
+    <!-- Barra de progresso -->
     <div class="mt-6 max-w-4xl mx-auto">
       <div class="flex justify-between text-sm mb-2">
-        <span>Progresso de Aprendizado</span>
-        <span id="progressoTexto">0/6 funções exploradas</span>
+        <span>📊 Progresso de Aprendizado</span>
+        <span id="progressoTexto" class="text-emerald-400 font-semibold">0/8 funções exploradas</span>
       </div>
-      <div class="h-2 bg-zinc-700 rounded-full overflow-hidden">
-        <div id="progressoBar" class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-500" style="width: 0%"></div>
+      <div class="h-3 bg-zinc-700 rounded-full overflow-hidden">
+        <div id="progressoBar" class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-500 rounded-full" style="width: 0%"></div>
       </div>
+      <p class="text-xs text-zinc-500 text-center mt-2">
+        💾 Progresso salvo automaticamente no seu navegador
+      </p>
     </div>
   </div>
 
@@ -188,11 +193,13 @@
     let perguntaAtual = null;
     
     const perguntasQuiz = [
-      { pergunta: "Qual joystick controla a altitude (subir/descer)?", opcoes: ["Esquerdo", "Direito", "Os dois", "Nenhum"], resposta: 0 },
-      { pergunta: "O que o botão RTH faz?", opcoes: ["Tira foto", "Retorna para casa", "Pausa o drone", "Liga o controle"], resposta: 1 },
-      { pergunta: "Para que serve o botão H (Pause)?", opcoes: ["Acelerar", "Pausar e manter hover", "Desligar", "Mudar câmera"], resposta: 1 },
-      { pergunta: "Qual joystick controla o movimento lateral (Roll)?", opcoes: ["Esquerdo", "Direito", "Botão C1", "Botão Power"], resposta: 1 },
-      { pergunta: "Quantas horas dura a bateria do controle?", opcoes: ["1 hora", "2 horas", "4 horas", "8 horas"], resposta: 2 }
+      { pergunta: "Qual joystick controla a altitude (subir e descer) do drone?", opcoes: ["Joystick Direito", "Joystick Esquerdo", "Botão RTH", "Botão C1"], resposta: 1, explicacao: "O joystick esquerdo controla Throttle (subir/descer) e Yaw (rotação)" },
+      { pergunta: "O que significa RTH e o que ele faz?", opcoes: ["Return To Home - Retorna à decolagem", "Ready To Hover - Prepara para pairar", "Remote Take-off Home - Decolagem remota", "Rotate To Horizon - Rotaciona para o horizonte"], resposta: 0, explicacao: "RTH = Return to Home. Faz o drone voltar automaticamente ao ponto de decolagem" },
+      { pergunta: "Para que serve o botão H (Pause)?", opcoes: ["Aumentar velocidade", "Pausar e manter o drone pairando (hover)", "Desligar o motor", "Ativar câmera térmica"], resposta: 1, explicacao: "O botão H interrompe todos os movimentos e mantém o drone em hover" },
+      { pergunta: "Qual joystick controla o movimento lateral (Roll) do drone?", opcoes: ["Joystick Esquerdo", "Joystick Direito", "Botão C2", "Dial de Zoom"], resposta: 1, explicacao: "Joystick direito: esquerda/direita = Roll, cima/baixo = Pitch" },
+      { pergunta: "Como ligar o controle DJI RC 2 corretamente?", opcoes: ["Apenas segurar o botão Power", "Uma pressão rápida + segurar", "Dois cliques rápidos", "Conectar no USB-C primeiro"], resposta: 1, explicacao: "Sequência correta: 1 pressão rápida + segurar até acender as luzes" },
+      { pergunta: "Quantas horas de autonomia tem a bateria do controle?", opcoes: ["2 horas", "4 horas", "6 horas", "8 horas"], resposta: 1, explicacao: "A bateria do DJI RC 2 dura aproximadamente 4 horas de uso contínuo" },
+      { pergunta: "Qual botão é usado para tirar fotos?", opcoes: ["Botão Power", "Botão RTH", "Botão superior direito (foto/vídeo)", "Botão C1"], resposta: 2, explicacao: "O botão dedicado de captura (foto/vídeo) fica no canto superior direito" }
     ];
     
     function atualizarProgresso() {
@@ -201,58 +208,60 @@
       const percentual = (exploradas / total) * 100;
       
       document.getElementById('progressoBar').style.width = `${percentual}%`;
-      document.getElementById('progressoTexto').innerText = `${exploradas}/${total} funções exploradas`;
+      document.getElementById('progressoTexto').innerHTML = `${exploradas}/${total} funções exploradas`;
       
       if (exploradas === total && !localStorage.getItem('parabens_mostrado')) {
         setTimeout(() => {
-          alert('🎉 Parabéns! Você explorou todas as funções do controle DJI! 🎉');
+          alert('🎉 PARABÉNS! 🎉\n\nVocê explorou todas as funções do controle DJI RC 2!\nAgora está pronto para usar o controle real com confiança!');
           localStorage.setItem('parabens_mostrado', 'true');
         }, 500);
       }
     }
     
-    // Hotspots interativos melhorados
+    // Configurar hotspots
     document.querySelectorAll('.hotspot').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         
-        // Registrar progresso
         const titulo = btn.dataset.titulo;
         if (!funcoesExploradas.has(titulo)) {
           funcoesExploradas.add(titulo);
           atualizarProgresso();
           
-          // Feedback sonoro visual
+          // Efeito visual de clique
           btn.style.transform = 'scale(1.2)';
           setTimeout(() => { btn.style.transform = ''; }, 200);
         }
         
-        // Atualizar painel de informações
+        // Atualizar painel
         document.getElementById('infoTitulo').innerHTML = titulo;
         document.getElementById('info').innerHTML = btn.dataset.desc;
         
-        // Animação de destaque
-        document.querySelector('.card-flip').style.transform = 'scale(0.98)';
-        setTimeout(() => {
-          document.querySelector('.card-flip').style.transform = '';
-        }, 200);
+        // Animação suave
+        const painelInfo = document.querySelector('.card-flip');
+        painelInfo.style.transform = 'scale(0.98)';
+        setTimeout(() => { painelInfo.style.transform = ''; }, 200);
       });
       
       // Tooltip ao passar mouse
+      let tooltipTimeout;
       btn.addEventListener('mouseenter', (e) => {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-        tooltip.innerText = btn.dataset.titulo;
-        document.body.appendChild(tooltip);
-        
-        const rect = btn.getBoundingClientRect();
-        tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
-        tooltip.style.top = `${rect.top - 30}px`;
-        
-        btn._tooltip = tooltip;
+        tooltipTimeout = setTimeout(() => {
+          const tooltip = document.createElement('div');
+          tooltip.className = 'tooltip';
+          tooltip.innerText = btn.dataset.titulo;
+          document.body.appendChild(tooltip);
+          
+          const rect = btn.getBoundingClientRect();
+          tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+          tooltip.style.top = `${rect.top - 35}px`;
+          
+          btn._tooltip = tooltip;
+        }, 300);
       });
       
       btn.addEventListener('mouseleave', () => {
+        clearTimeout(tooltipTimeout);
         if (btn._tooltip) {
           btn._tooltip.remove();
           btn._tooltip = null;
@@ -279,7 +288,7 @@
       perguntaAtual.opcoes.forEach((opcao, idx) => {
         const btn = document.createElement('button');
         btn.innerText = opcao;
-        btn.className = 'w-full text-left px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg transition';
+        btn.className = 'w-full text-left px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg transition mb-2';
         btn.onclick = () => verificarResposta(idx);
         optionsDiv.appendChild(btn);
       });
@@ -293,10 +302,10 @@
       
       const feedback = document.getElementById('quizFeedback');
       if (selecionada === perguntaAtual.resposta) {
-        feedback.innerHTML = '<span class="text-emerald-400">✅ Correto! Muito bem!</span>';
+        feedback.innerHTML = `<span class="text-emerald-400 text-lg">✅ CORRETO!</span><br><span class="text-zinc-400 text-sm">${perguntaAtual.explicacao}</span>`;
         novaPerguntaBtn.classList.remove('hidden');
       } else {
-        feedback.innerHTML = `<span class="text-red-400">❌ Incorreto. A resposta certa é: ${perguntaAtual.opcoes[perguntaAtual.resposta]}</span>`;
+        feedback.innerHTML = `<span class="text-red-400 text-lg">❌ INCORRETO</span><br><span class="text-zinc-400 text-sm">Resposta certa: ${perguntaAtual.opcoes[perguntaAtual.resposta]}<br>${perguntaAtual.explicacao}</span>`;
         novaPerguntaBtn.classList.remove('hidden');
       }
     }
@@ -304,15 +313,15 @@
     modoTesteBtn.addEventListener('click', () => {
       modoTesteAtivo = !modoTesteAtivo;
       if (modoTesteAtivo) {
-        modoTesteBtn.textContent = '📖 Sair do Teste';
+        modoTesteBtn.innerHTML = '📖 Sair do Teste';
         modoTesteBtn.classList.remove('bg-amber-600');
         modoTesteBtn.classList.add('bg-red-600');
         carregarPergunta();
       } else {
-        modoTesteBtn.textContent = '📝 Modo Teste';
+        modoTesteBtn.innerHTML = '📝 Modo Teste';
         modoTesteBtn.classList.remove('bg-red-600');
         modoTesteBtn.classList.add('bg-amber-600');
-        document.getElementById('pergunta').innerHTML = 'Modo teste desativado. Clique nos botões para aprender!';
+        document.getElementById('pergunta').innerHTML = '✨ Modo teste desativado. Clique nos botões verdes do controle para aprender!';
         document.getElementById('quizOptions').innerHTML = '';
         document.getElementById('quizFeedback').innerHTML = '';
       }
@@ -321,29 +330,30 @@
     novaPerguntaBtn.addEventListener('click', carregarPergunta);
     
     resetDicasBtn.addEventListener('click', () => {
-      funcoesExploradas.clear();
-      atualizarProgresso();
-      localStorage.removeItem('parabens_mostrado');
-      document.getElementById('info').innerHTML = 'Progresso reiniciado! Explore novamente todas as funções.';
-      document.getElementById('infoTitulo').innerHTML = 'Detalhes da Função';
-      
-      // Animação de confirmação
-      resetDicasBtn.textContent = '✅ Reiniciado!';
-      setTimeout(() => {
-        resetDicasBtn.textContent = '🔄 Reiniciar Dicas';
-      }, 2000);
+      if (confirm('Tem certeza? Isso vai reiniciar todo o seu progresso de aprendizado.')) {
+        funcoesExploradas.clear();
+        atualizarProgresso();
+        localStorage.removeItem('parabens_mostrado');
+        document.getElementById('info').innerHTML = '🔄 Progresso reiniciado! Explore novamente todas as funções do controle.';
+        document.getElementById('infoTitulo').innerHTML = 'Detalhes da Função';
+        
+        resetDicasBtn.innerHTML = '✅ Reiniciado!';
+        setTimeout(() => {
+          resetDicasBtn.innerHTML = '🔄 Reiniciar Progresso';
+        }, 2000);
+      }
     });
     
     // Carregar progresso salvo
-    const progressoSalvo = localStorage.getItem('funcoes_aprendidas');
+    const progressoSalvo = localStorage.getItem('funcoes_aprendidas_dji');
     if (progressoSalvo) {
       JSON.parse(progressoSalvo).forEach(f => funcoesExploradas.add(f));
       atualizarProgresso();
     }
     
-    // Salvar progresso ao sair
+    // Salvar progresso
     window.addEventListener('beforeunload', () => {
-      localStorage.setItem('funcoes_aprendidas', JSON.stringify([...funcoesExploradas]));
+      localStorage.setItem('funcoes_aprendidas_dji', JSON.stringify([...funcoesExploradas]));
     });
   </script>
 </body>
