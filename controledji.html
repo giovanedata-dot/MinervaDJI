@@ -3,53 +3,347 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Controle DJI RC 2</title>
+  <title>Simulador Controle DJI RC 2 - Treinamento Interativo</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .hotspot {
       transition: all 0.3s;
+      animation: pulse 2s infinite;
     }
+    
     .hotspot:hover {
-      transform: scale(1.4);
-      box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.5);
+      transform: scale(1.5);
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: none;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0.7; transform: scale(1); }
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: #1f2937;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 50;
+      transform: translateY(-100%);
+      margin-top: -8px;
+    }
+    
+    .card-flip {
+      transition: all 0.3s ease;
+    }
+    
+    .card-flip:hover {
+      transform: translateY(-4px);
     }
   </style>
 </head>
-<body class="bg-zinc-950 text-white">
-  <div class="max-w-6xl mx-auto p-6">
-    <h1 class="text-4xl font-bold text-center mb-8">🎮 Simulador Controle DJI RC 2</h1>
+<body class="bg-gradient-to-br from-zinc-950 to-zinc-900 text-white">
+  <div class="max-w-7xl mx-auto p-6">
+    <!-- Header com progresso -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+        🎮 Simulador DJI RC 2
+      </h1>
+      <div class="flex gap-4">
+        <button id="modoTeste" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 rounded-lg transition">
+          📝 Modo Teste
+        </button>
+        <button id="resetDicas" class="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg transition">
+          🔄 Reiniciar Dicas
+        </button>
+      </div>
+    </div>
     
-    <div class="relative mx-auto" style="max-width: 900px;">
-      <img src="maxresdefault.jpg" class="w-full rounded-2xl shadow-2xl" alt="Controle DJI">
-      
-      <!-- Hotspots -->
-      <div class="hotspot absolute w-12 h-12 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 28%; left: 22%;" data-titulo="Joystick Esquerdo" data-desc="Controla Yaw (rotação) e Throttle (subir/descer)"></div>
-      
-      <div class="hotspot absolute w-12 h-12 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 28%; left: 68%;" data-titulo="Joystick Direito" data-desc="Controla Roll e Pitch"></div>
-      
-      <div class="hotspot absolute w-10 h-10 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 37%;" data-titulo="Botão H (Pause)" data-desc="Pausa o voo e mantém o drone em Hover"></div>
-      
-      <div class="hotspot absolute w-11 h-8 bg-emerald-500/40 rounded border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 48%;" data-titulo="Botão RTH" data-desc="Return to Home - Retorno automático para casa"></div>
-      
-      <div class="hotspot absolute w-10 h-10 bg-emerald-500/40 rounded-full border-4 border-emerald-400 cursor-pointer" style="top: 33%; left: 60%;" data-titulo="Botão Power" data-desc="Liga e desliga o controle"></div>
+    <div class="relative mx-auto" style="max-width: 1000px;">
+      <!-- Placeholder enquanto não tem imagem real -->
+      <div class="relative bg-zinc-800 rounded-2xl p-8 min-h-[500px] flex items-center justify-center">
+        <div class="text-center">
+          <svg class="w-32 h-32 mx-auto mb-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <p class="text-zinc-400">⚠️ Adicione uma imagem do controle DJI RC 2</p>
+          <p class="text-sm text-zinc-500 mt-2">Substitua a imagem abaixo ou use uma URL válida</p>
+        </div>
+        
+        <!-- Componentes visuais didáticos -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+          <div class="grid grid-cols-2 gap-32">
+            <div class="text-center">
+              <div class="w-24 h-24 border-4 border-emerald-500 rounded-full mx-auto"></div>
+              <p class="mt-2">Joystick Esquerdo</p>
+            </div>
+            <div class="text-center">
+              <div class="w-24 h-24 border-4 border-emerald-500 rounded-full mx-auto"></div>
+              <p class="mt-2">Joystick Direito</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Hotspots melhorados -->
+        <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold" 
+             style="top: 35%; left: 22%;" 
+             data-titulo="🎮 Joystick Esquerdo"
+             data-desc="<strong>Controles de Movimento:</strong><br>• Yaw (Rotação): Mova para esquerda/direita<br>• Throttle (Altitude): Mova para cima/baixo<br><br>💡 Dica: Controle a altura e direção do drone"
+             data-funcao="yaw_throttle">
+          ⬆️
+        </div>
+        
+        <div class="hotspot absolute w-14 h-14 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-white font-bold" 
+             style="top: 35%; left: 68%;" 
+             data-titulo="🎮 Joystick Direito"
+             data-desc="<strong>Controles de Navegação:</strong><br>• Roll (Movimento Lateral): Mova esquerda/direita<br>• Pitch (Movimento Frente/Trás): Mova cima/baixo<br><br>💡 Dica: Controla o movimento horizontal do drone"
+             data-funcao="roll_pitch">
+          ➡️
+        </div>
+        
+        <div class="hotspot absolute w-12 h-12 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
+             style="top: 42%; left: 36%;" 
+             data-titulo="⏸️ Botão H (Pause)"
+             data-desc="<strong>Função: Pausa/Hover</strong><br>• Interrompe todos os movimentos<br>• Mantém o drone estável no ar<br>• Útil para emergências<br><br>⚠️ Importante em situações de perda de controle">
+          ⏸️
+        </div>
+        
+        <div class="hotspot absolute w-12 h-10 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
+             style="top: 42%; left: 48%;" 
+             data-titulo="🏠 Botão RTH"
+             data-desc="<strong>Return to Home</strong><br>• Retorno automático ao ponto de partida<br>• Sobe para altitude segura antes de voltar<br>• Usado quando drone está longe<br><br>✅ Altura padrão: 30m">
+          🏠
+        </div>
+        
+        <div class="hotspot absolute w-12 h-12 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center" 
+             style="top: 42%; left: 60%;" 
+             data-titulo="🔘 Botão Power"
+             data-desc="<strong>Liga/Desliga</strong><br>• Pressione 1x para ver a bateria<br>• Pressione + segure para ligar<br>• Sequência: 2 cliques + segurar<br><br>📊 Bateria média: 4 horas de uso">
+          ⚡
+        </div>
+
+        <div class="hotspot absolute w-10 h-10 bg-emerald-500/50 rounded-full border-4 border-emerald-400 cursor-pointer flex items-center justify-center text-xs" 
+             style="top: 55%; left: 30%;" 
+             data-titulo="📸 Botão Foto/Video"
+             data-desc="<strong>Captura de Mídia</strong><br>• Meio clique: Foto<br>• Clique total: Inicia/para vídeo<br>• Customizável no app DJI Fly<br><br>🎬 Resolução máxima: 4K 60fps">
+          📷
+        </div>
+
+        <div class="hotspot absolute w-12 h-8 bg-emerald-500/50 rounded-lg border-4 border-emerald-400 cursor-pointer" 
+             style="top: 62%; left: 47%;" 
+             data-titulo="🔄 Botão C1/C2"
+             data-desc="<strong>Botões Customizáveis</strong><br>• C1: Center camera (padrão)<br>• C2: Grid/Level (padrão)<br>• Podem ser configurados no app<br><br>⚙️ Atalhos para funções frequentes">
+          ⚙️
+        </div>
+      </div>
     </div>
 
-    <div class="mt-10 bg-zinc-900 rounded-2xl p-8 max-w-2xl mx-auto">
-      <h2 class="text-2xl font-semibold mb-4 text-emerald-400">📋 Detalhes da Função</h2>
-      <div id="info" class="text-zinc-300 text-lg min-h-[100px]">
-        Clique em um dos círculos verdes na imagem
+    <!-- Painel de informações expandido -->
+    <div class="mt-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div class="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl p-6 shadow-xl card-flip">
+        <h2 class="text-2xl font-semibold mb-4 text-emerald-400 flex items-center gap-2">
+          📋 <span id="infoTitulo">Detalhes da Função</span>
+        </h2>
+        <div id="info" class="text-zinc-300 leading-relaxed min-h-[180px]">
+          Clique em qualquer botão verde para aprender sua função
+        </div>
+      </div>
+      
+      <!-- Área de quiz interativo -->
+      <div class="bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl p-6 shadow-xl">
+        <h2 class="text-2xl font-semibold mb-4 text-amber-400 flex items-center gap-2">
+          🧠 <span>Teste Seu Conhecimento</span>
+        </h2>
+        <div id="quizArea">
+          <p class="text-zinc-400 mb-3" id="pergunta">Clique em "Modo Teste" para começar</p>
+          <div id="quizOptions" class="space-y-2"></div>
+          <div id="quizFeedback" class="mt-3 text-sm"></div>
+        </div>
+        <button id="novaPergunta" class="mt-4 w-full py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg transition font-semibold hidden">
+          ➡️ Próxima Pergunta
+        </button>
+      </div>
+    </div>
+    
+    <!-- Barra de progresso de aprendizado -->
+    <div class="mt-6 max-w-4xl mx-auto">
+      <div class="flex justify-between text-sm mb-2">
+        <span>Progresso de Aprendizado</span>
+        <span id="progressoTexto">0/6 funções exploradas</span>
+      </div>
+      <div class="h-2 bg-zinc-700 rounded-full overflow-hidden">
+        <div id="progressoBar" class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-500" style="width: 0%"></div>
       </div>
     </div>
   </div>
 
   <script>
+    // Controle de progresso
+    let funcoesExploradas = new Set();
+    let modoTesteAtivo = false;
+    let perguntaAtual = null;
+    
+    const perguntasQuiz = [
+      { pergunta: "Qual joystick controla a altitude (subir/descer)?", opcoes: ["Esquerdo", "Direito", "Os dois", "Nenhum"], resposta: 0 },
+      { pergunta: "O que o botão RTH faz?", opcoes: ["Tira foto", "Retorna para casa", "Pausa o drone", "Liga o controle"], resposta: 1 },
+      { pergunta: "Para que serve o botão H (Pause)?", opcoes: ["Acelerar", "Pausar e manter hover", "Desligar", "Mudar câmera"], resposta: 1 },
+      { pergunta: "Qual joystick controla o movimento lateral (Roll)?", opcoes: ["Esquerdo", "Direito", "Botão C1", "Botão Power"], resposta: 1 },
+      { pergunta: "Quantas horas dura a bateria do controle?", opcoes: ["1 hora", "2 horas", "4 horas", "8 horas"], resposta: 2 }
+    ];
+    
+    function atualizarProgresso() {
+      const total = document.querySelectorAll('.hotspot').length;
+      const exploradas = funcoesExploradas.size;
+      const percentual = (exploradas / total) * 100;
+      
+      document.getElementById('progressoBar').style.width = `${percentual}%`;
+      document.getElementById('progressoTexto').innerText = `${exploradas}/${total} funções exploradas`;
+      
+      if (exploradas === total && !localStorage.getItem('parabens_mostrado')) {
+        setTimeout(() => {
+          alert('🎉 Parabéns! Você explorou todas as funções do controle DJI! 🎉');
+          localStorage.setItem('parabens_mostrado', 'true');
+        }, 500);
+      }
+    }
+    
+    // Hotspots interativos melhorados
     document.querySelectorAll('.hotspot').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('info').innerHTML = `
-          <strong class="text-xl">${btn.dataset.titulo}</strong><br><br>
-          ${btn.dataset.desc}
-        `;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Registrar progresso
+        const titulo = btn.dataset.titulo;
+        if (!funcoesExploradas.has(titulo)) {
+          funcoesExploradas.add(titulo);
+          atualizarProgresso();
+          
+          // Feedback sonoro visual
+          btn.style.transform = 'scale(1.2)';
+          setTimeout(() => { btn.style.transform = ''; }, 200);
+        }
+        
+        // Atualizar painel de informações
+        document.getElementById('infoTitulo').innerHTML = titulo;
+        document.getElementById('info').innerHTML = btn.dataset.desc;
+        
+        // Animação de destaque
+        document.querySelector('.card-flip').style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          document.querySelector('.card-flip').style.transform = '';
+        }, 200);
       });
+      
+      // Tooltip ao passar mouse
+      btn.addEventListener('mouseenter', (e) => {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.innerText = btn.dataset.titulo;
+        document.body.appendChild(tooltip);
+        
+        const rect = btn.getBoundingClientRect();
+        tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+        tooltip.style.top = `${rect.top - 30}px`;
+        
+        btn._tooltip = tooltip;
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        if (btn._tooltip) {
+          btn._tooltip.remove();
+          btn._tooltip = null;
+        }
+      });
+    });
+    
+    // Modo Teste
+    const modoTesteBtn = document.getElementById('modoTeste');
+    const resetDicasBtn = document.getElementById('resetDicas');
+    const novaPerguntaBtn = document.getElementById('novaPergunta');
+    
+    function carregarPergunta() {
+      if (!modoTesteAtivo) return;
+      
+      const randomIndex = Math.floor(Math.random() * perguntasQuiz.length);
+      perguntaAtual = perguntasQuiz[randomIndex];
+      
+      document.getElementById('pergunta').innerHTML = `❓ ${perguntaAtual.pergunta}`;
+      
+      const optionsDiv = document.getElementById('quizOptions');
+      optionsDiv.innerHTML = '';
+      
+      perguntaAtual.opcoes.forEach((opcao, idx) => {
+        const btn = document.createElement('button');
+        btn.innerText = opcao;
+        btn.className = 'w-full text-left px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg transition';
+        btn.onclick = () => verificarResposta(idx);
+        optionsDiv.appendChild(btn);
+      });
+      
+      document.getElementById('quizFeedback').innerHTML = '';
+      novaPerguntaBtn.classList.add('hidden');
+    }
+    
+    function verificarResposta(selecionada) {
+      if (!perguntaAtual) return;
+      
+      const feedback = document.getElementById('quizFeedback');
+      if (selecionada === perguntaAtual.resposta) {
+        feedback.innerHTML = '<span class="text-emerald-400">✅ Correto! Muito bem!</span>';
+        novaPerguntaBtn.classList.remove('hidden');
+      } else {
+        feedback.innerHTML = `<span class="text-red-400">❌ Incorreto. A resposta certa é: ${perguntaAtual.opcoes[perguntaAtual.resposta]}</span>`;
+        novaPerguntaBtn.classList.remove('hidden');
+      }
+    }
+    
+    modoTesteBtn.addEventListener('click', () => {
+      modoTesteAtivo = !modoTesteAtivo;
+      if (modoTesteAtivo) {
+        modoTesteBtn.textContent = '📖 Sair do Teste';
+        modoTesteBtn.classList.remove('bg-amber-600');
+        modoTesteBtn.classList.add('bg-red-600');
+        carregarPergunta();
+      } else {
+        modoTesteBtn.textContent = '📝 Modo Teste';
+        modoTesteBtn.classList.remove('bg-red-600');
+        modoTesteBtn.classList.add('bg-amber-600');
+        document.getElementById('pergunta').innerHTML = 'Modo teste desativado. Clique nos botões para aprender!';
+        document.getElementById('quizOptions').innerHTML = '';
+        document.getElementById('quizFeedback').innerHTML = '';
+      }
+    });
+    
+    novaPerguntaBtn.addEventListener('click', carregarPergunta);
+    
+    resetDicasBtn.addEventListener('click', () => {
+      funcoesExploradas.clear();
+      atualizarProgresso();
+      localStorage.removeItem('parabens_mostrado');
+      document.getElementById('info').innerHTML = 'Progresso reiniciado! Explore novamente todas as funções.';
+      document.getElementById('infoTitulo').innerHTML = 'Detalhes da Função';
+      
+      // Animação de confirmação
+      resetDicasBtn.textContent = '✅ Reiniciado!';
+      setTimeout(() => {
+        resetDicasBtn.textContent = '🔄 Reiniciar Dicas';
+      }, 2000);
+    });
+    
+    // Carregar progresso salvo
+    const progressoSalvo = localStorage.getItem('funcoes_aprendidas');
+    if (progressoSalvo) {
+      JSON.parse(progressoSalvo).forEach(f => funcoesExploradas.add(f));
+      atualizarProgresso();
+    }
+    
+    // Salvar progresso ao sair
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('funcoes_aprendidas', JSON.stringify([...funcoesExploradas]));
     });
   </script>
 </body>
